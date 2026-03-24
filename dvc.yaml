@@ -1,0 +1,19 @@
+stages:
+  data_ingestion:
+    cmd: python src/neuronTracer/pipeline/stage1.py
+    deps:
+      - src/neuronTracer/pipeline/stage1.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/
+      
+  data_transform:
+    cmd: python src/neuronTracer/pipeline/stage2.py
+    deps:
+      - src/neuronTracer/pipeline/stage2.py
+      - config/config.yaml
+    params:
+      - box_size_mac
+    outs:
+      - artifacts/data_transform/
+

@@ -1,0 +1,11 @@
+box_size_mac: [7, 64, 64]
+BATCH_SIZE: 4    
+OUTPUT_SIZE: 224  # must match decoder output
+EPOCHS: 1          # increase to 20–30 for better results
+LR: 0.0001  
+augmentTrain: True
+augmentLabel: False
+WEIGHT_DECAY: 0.0001 # optimizer
+factor: 0.5 #lr_scheduler.ReduceLROnPlateau
+patience: 4 #lr_scheduler.ReduceLROnPlateau
+min_lr: 1e-6 #lr_scheduler.ReduceLROnPlateau

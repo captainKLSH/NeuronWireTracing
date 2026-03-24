@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.ruff_cache
+logs/*
+!logs/.gitkeep
+artifacts/
+.dvc
+
+# Virtual environments
+.venv
+# OS Specific
+.DS_Store
+output/*
+*.pth
+*.pt
+*.zarr
+*.tif

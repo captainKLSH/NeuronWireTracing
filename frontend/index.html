@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuron Tracer AI — 3D Brain Mapping</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', path='home.css') }}">
+    <link rel="stylesheet" href="./static/home.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-mark"></div>
+        <div class="logo-text"><span>Neuron Tracer</span> AI</div>
+    </div>
+    <div class="viewer-overlay-top">
+            <div class="viewer-badge">Neuroglancer — live 3D feed</div>
+            
+        </div>
+    <div class="header-meta">
+        <div class="status-pill"><div class="status-dot"></div>Model active</div>
+        <div class="header-stat">Session <strong>#4821</strong></div>
+        <div class="header-stat">Volume <strong>100 × 1024²</strong></div>
+        <div class="header-stat">Backend <strong>DINOv2 + U-Net</strong></div>
+    </div>
+</header>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-section">
+            <div class="section-label">Upload scans</div>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="upload-zone" id="zone-raw">
+                    <input type="file" name="raw_file" accept=".tif,.tiff" required onchange="setLabel('zone-raw','lbl-raw',this)">
+                    <div class="upload-icon">↑</div>
+                    <div class="upload-label-text">
+                        <strong>Raw brain scan</strong>
+                        .tif / .tiff
+                    </div>
+                    <div class="file-chosen" id="lbl-raw">no file selected</div>
+                </div>
+
+                <div class="upload-zone" id="zone-pred">
+                    <input type="file" name="pred_file" accept=".tif,.tiff" required onchange="setLabel('zone-pred','lbl-pred',this)">
+                    <div class="upload-icon">↑</div>
+                    <div class="upload-label-text">
+                        <strong>AI prediction mask</strong>
+                        .tif / .tiff
+                    </div>
+                    <div class="file-chosen" id="lbl-pred">no file selected</div>
+                </div>
+
+                <button type="submit" class="render-btn"><span>▶ Render in 3D</span></button>
+            </form>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="section-label">Last run metrics</div>
+            <div class="metrics-grid">
+                <div class="metric-card highlight">
+                    <div class="metric-name">Precision</div>
+                    <div class="metric-value good">82%</div>
+                    <div class="metric-sub">TP / (TP+FP)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-name">Recall</div>
+                    <div class="metric-value bad">40.53%</div>
+                    <div class="metric-sub">TP / (TP+FN)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-name">Dice</div>
+                    <div class="metric-value">54.01%</div>
+                    <div class="metric-sub">F1 score</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-name">IoU</div>
+                    <div class="metric-value">37.00%</div>
+                    <div class="metric-sub">Jaccard index</div>
+                </div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-name">Precision</div>
+                <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+                <div class="bar-val">0.82</div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-name">Recall</div>
+                <div class="bar-track"><div class="bar-fill low" style="width:40.53%"></div></div>
+                <div class="bar-val">0.405</div>
+            </div>
+            <div class="bar-row" style="margin-bottom:18px">
+                <div class="bar-name">Dice</div>
+                <div class="bar-track"><div class="bar-fill low" style="width:54.1%"></div></div>
+                <div class="bar-val">0.54</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="section-label">System log</div>
+            <div class="log-feed">
+                <div class="log-line"><span class="ts">09:41:02</span><span class="msg ok">Encoder loaded — DINOv2 ViT-B/14</span></div>
+                <div class="log-line"><span class="ts">09:41:03</span><span class="msg info">Decoder weights restored</span></div>
+                <div class="log-line"><span class="ts">09:41:05</span><span class="msg info">Chunking 100×1024² → 64³ tiles</span></div>
+                <div class="log-line"><span class="ts">09:41:18</span><span class="msg info">Inference complete — 4,096 tiles</span></div>
+                <div class="log-line"><span class="ts">09:41:19</span><span class="msg warn">Recall 3.4% — check pos_weight</span></div>
+                <div class="log-line"><span class="ts">09:41:19</span><span class="msg ok">Neuroglancer feed ready</span></div>
+            </div>
+        </div>
+
+    </aside>
+
+    <div class="viewer-wrap">
+        
+
+        <iframe src="{{ neuroglancer_url }}" title="Neuroglancer Viewer"></iframe>
+
+        <div class="viewer-overlay-bottom">
+            <div class="channel-legend">
+                <div class="ch-item"><div class="ch-dot" style="background:#2f5b91"></div>Raw scan</div>
+                <div class="ch-item"><div class="ch-dot" style="background:#4ade80"></div>AI prediction</div>
+                <div class="ch-item"><div class="ch-dot" style="background:#f472b6"></div>Ground truth</div>
+            </div>
+            <div class="corner-bracket"></div>
+        </div>
+    </div>
+
+</div>
+<script src="{{ url_for('static', path='main.js') }}" defer></script>
+
+</body>
+</html>

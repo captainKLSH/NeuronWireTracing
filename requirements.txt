@@ -1,0 +1,30 @@
+# --- Core AI & Data Science ---
+# tensorflow-macos        # The brain (CNN) - optimized for your Mac
+# pandas                  # The spreadsheet manager
+numpy==2.4.2                   # The math engine
+# matplotlib              # The graphing tool
+joblib                  # The "Deep Freezer" for binary files
+
+# --- Advanced Utilities ---
+python-box              # Powers ConfigBox (Dot-notation access)
+ensure                  # Powers @ensure_annotations (Type safety)
+pyYAML                  # Powers read_yaml (Config management)
+tqdm                    # Powers your Progress Bars
+# scipy                   # Advanced math for image processing
+
+# --- Backend & Web ---
+fastapi                 # The high-speed kitchen (API)
+uvicorn                 # The engine that runs FastAPI
+python-multipart        # Allows users to upload files
+Jinja2                  # The HTML menu designer
+
+# --- MLOps & Tracking ---
+dvc                     # Data versioning (GitHub for big files)
+mlflow                  # The digital lab notebook
+dagshub                 # The central hub for your experiments
+python-dotenv           # Keeps your secret keys safe
+
+# --- Specials ---
+tifffile==2026.3.3
+zarr==3.1.5 
+torch

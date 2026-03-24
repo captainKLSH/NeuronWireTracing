@@ -1,0 +1,43 @@
+artifacts_root: artifacts
+
+data_ingestion:
+    root_dir: artifacts/data_ingestion
+    source_url: https://zenodo.org/records/7142003/files/snemi.zip
+    local_data_file: artifacts/data_ingestion/snemi.zip
+    unzip_dir: artifacts/data_ingestion
+
+data_transform:
+    root_dir: artifacts/data_transform
+    train_data: artifacts/data_ingestion/image/train-input.tif
+    label_data: artifacts/data_ingestion/seg/train-labels.tif
+    test_data:  artifacts/data_ingestion/image/test-input.tif
+
+torch_convert:
+    root_dir: artifacts/torch_convert
+    train_data: artifacts/data_transform/train_images.zarr
+    label_data: artifacts/data_transform/train_labels.zarr
+
+model_diagnosis:
+    train_img: artifacts/torch_convert/images
+    label_pth: artifacts/torch_convert/labels
+
+model_build_enc:
+    train_img: artifacts/torch_convert/images
+    label_pth: artifacts/torch_convert/labels
+
+model_train:
+    root_dir: artifacts/model_build
+    train_img: artifacts/torch_convert/images
+    label_pth: artifacts/torch_convert/labels
+    enc_model: artifacts/model_build/dino_decoder_best.pth
+
+model_test:
+    root_dir: artifacts/test
+    test_pth: artifacts/data_transform/test.zarr
+    model_pth: artifacts/model_build/dino_decoder_best.pth
+    val_images_dir: artifacts/torch_convert/images
+    val_labels_dir: artifacts/torch_convert/labels
+
+
+
+
