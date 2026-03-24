@@ -16,7 +16,7 @@ artifacts/
 # OS Specific
 .DS_Store
 output/*
-*.pth
+
 *.pt
 *.zarr
 *.tif
